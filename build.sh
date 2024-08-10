@@ -43,7 +43,13 @@ send_file() {
 
 # Building LLVM's
 msg "Building LLVM's ..."
-send_msg "<b>Start build RastaMod69 Clang from <code>[ $BRANCH ]</code> branch Via Github Actions</b>"
+send_msg "
+╔ ⚒ =============<b>RastaMod69</b>============= ⚒ 
+╠ <b>Start build RastaMod69 Clang</b> 
+╠ LLVM Branch   : <code>[ $BRANCH ]</code> 
+╠ Compiler      : <b>Github Actions</b>
+╚ ⚒ ===================================== ⚒ "
+
 ./build-llvm.py \
     --defines LLVM_PARALLEL_COMPILE_JOBS="$(nproc)" LLVM_PARALLEL_LINK_JOBS="$(nproc)" CMAKE_C_FLAGS=-O3 CMAKE_CXX_FLAGS=-O3 \
     --install-folder "$HOME_DIR/install" \
@@ -194,15 +200,13 @@ done
 
 # Send message to telegram
 send_msg "
-<b>========== Quick Info ==========</b>
-<b>Build Date : </b>
-* <code>$build_date</code>
-<b>Clang Version : </b>
-* <code>$clang_version</code>
-<b>Binutils Version : </b>
-* <code>$binutils_version</code>
-<b>Compile Based : </b>
-* <a href='$llvm_commit_url'>$llvm_commit_url</a>
-<b>Push Repository : </b>
-* <a href='https://github.com/kutemeikito/RastaMod69-Clang.git'>RastaMod69-Clang</a>
-<b>===============================</b>"
+╔ ⛩ <b>=================Build Done!=================</b> ⛩
+║
+╠ 🗓 <b>Build Date : <code>$build_date</code></b> 
+╠ ⚙️ <b>Clang Version : <code>$clang_version</code></b>
+╠ 🖥 <b>Binutils Version : <code>$binutils_version</code></b>
+╠ 🔗 <b>Compile Based : <a href='$llvm_commit_url'>Fork LLVM-Project</a></b> 
+╠ 📍 <b>Push Repository : <a href='https://github.com/kutemeikito/RastaMod69-Clang.git'>RastaMod69-Clang</a></b>
+╠ ⌚️ <b>Completed in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !</b>
+║
+╚ ⛩ <b>============================================</b> ⛩"
