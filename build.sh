@@ -2,15 +2,12 @@
 # Copyright ©2022-2024 XSans0
 
 # Function to show an informational message
-msg() {
-    echo -e "\e[1;32m$*\e[0m"
-}
 err() {
     echo -e "\e[1;41$*\e[0m"
 }
 
 # Environment checker
-msg "Checking environment ..."
+echo "Checking environment ..."
 for environment in TELEGRAM_TOKEN TELEGRAM_CHAT GIT_TOKEN BRANCH; do
     [ -z "${!environment}" ] && {
         err "- $environment not set!"
@@ -40,8 +37,8 @@ send_file() {
         "$2"
 }
 
-# Building LLVM's
-msg "Building LLVM's ..."
+# Build LLVM
+echo "building LLVM..."
 send_msg "
 ╔ ⚒ =============<b>RastaMod69</b>============= ⚒ 
 ╠ <b>Start build RastaMod69 Clang</b> 
@@ -72,7 +69,7 @@ for file in install/bin/clang-[1-9]*; do
 done
 
 # Build binutils
-msg "Build binutils ..."
+echo "building binutils ..."
 ./build-binutils.py \
     --install-folder "$HOME_DIR/install" \
     --targets arm aarch64 x86_64
