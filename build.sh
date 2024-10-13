@@ -91,7 +91,6 @@ clang_version="$("$HOME_DIR"/install/bin/clang --version | head -n1 | cut -d' ' 
 build_date="$(TZ=Asia/Jakarta date +"%Y-%m-%d")"
 tags="RastaMod69-Clang-$clang_version-release"
 file="RastaMod69-Clang-$clang_version.tar.gz"
-clang_link="https://git@github.com:kutemeikito/RastaMod69-Clang/releases/download/$tags/$file"
 
 # Get binutils version
 binutils_version=$(grep "LATEST_BINUTILS_RELEASE" build-binutils.py)
@@ -101,29 +100,13 @@ binutils_version=$(echo "$binutils_version" | tr ',' '.')
 # Create simple info
 pushd "$HOME_DIR"/install || exit
 {
-    echo "# Quick Info
-* Build Date : $build_date
-* Clang Version : $clang_version
-* Binutils Version : $binutils_version
-* Compiled Based : $llvm_commit_url"
-} >>README.md
+    echo "build date: $build_date
+clang version: $clang_version
+binutils version: $binutils_version
+llvm commit: $llvm_commit_url"
+} > README.md
 tar -czvf ../"$file" .
 popd || exit
-
-# Push
-git clone "https://kutemeikito:$GIT_TOKEN@github.com/kutemeikito/RastaMod69-Clang.git" rel_repo
-pushd rel_repo || exit
-if [ -d "$BRANCH" ]; then
-    echo "$clang_link" >"$BRANCH"/link.txt
-    cp -r "$HOME_DIR"/install/README.md "$BRANCH"
-else
-    mkdir -p "$BRANCH"
-    echo "$clang_link" >"$BRANCH"/link.txt
-    cp -r "$HOME_DIR"/install/README.md "$BRANCH"
-fi
-git add .
-git commit -asm "RastaMod69-Clang-$clang_version: $(TZ=Asia/Jakarta date +"%Y%m%d")"
-git push -f origin main
 
 # Check tags already exists or not
 overwrite=y
