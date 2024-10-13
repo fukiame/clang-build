@@ -18,23 +18,12 @@ done
 # Get home directory
 HOME_DIR="$(pwd)"
 
-# Telegram Setup
-git clone --depth=1 https://github.com/XSans0/Telegram Telegram
-
-TELEGRAM="$HOME_DIR/Telegram/telegram"
+# Telegram setup
 send_msg() {
-    "${TELEGRAM}" -H -D \
-        "$(
-            for POST in "${@}"; do
-                echo "${POST}"
-            done
-        )"
+    bash "$HOME_DIR/tg_utils.sh" msg ${@}
 }
-
 send_file() {
-    "${TELEGRAM}" -H \
-        -f "$1" \
-        "$2"
+    bash "$HOME_DIR/tg_utils.sh" up "$1" "$2"
 }
 
 # Build LLVM
