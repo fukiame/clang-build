@@ -26,6 +26,13 @@ send_file() {
     bash "$HOME_DIR/tg_utils.sh" up "$1" "$2"
 }
 
+# Git config
+git config --global user.name "fukiame"
+git config --global user.email "fukiame@proton.me"
+
+GH_USER=fukiame
+GH_REPO=clang-build
+
 # Build LLVM
 echo "building LLVM..."
 send_msg "gh $RUN_NUM: building LLVM"
@@ -77,10 +84,6 @@ for bin in $(find install -mindepth 2 -maxdepth 3 -type f -exec file {} \; | gre
     patchelf --set-rpath "$DIR/../lib" "$bin"
 done
 
-# Git config
-git config --global user.name "Edwiin Kusuma Jaya"
-git config --global user.email "kutemeikito0905@gmail.com"
-
 # Get Clang Info
 pushd "$HOME_DIR"/src/llvm-project || exit
 llvm_commit="$(git rev-parse HEAD)"
@@ -89,8 +92,8 @@ popd || exit
 llvm_commit_url="https://github.com/llvm/llvm-project/commit/$short_llvm_commit"
 clang_version="$("$HOME_DIR"/install/bin/clang --version | head -n1 | cut -d' ' -f4)"
 build_date="$(TZ=Asia/Jakarta date +"%Y-%m-%d")"
-tags="RastaMod69-Clang-$clang_version-release"
-file="RastaMod69-Clang-$clang_version.tar.gz"
+tags="$GH_REPO_version-release"
+file="$GH_REPO_version.tar.gz"
 
 # Get binutils version
 binutils_version=$(grep "LATEST_BINUTILS_RELEASE" build-binutils.py)
@@ -118,15 +121,15 @@ failed=n
 if [ "$overwrite" == "y" ]; then
     ./github-release edit \
         --security-token "$GIT_TOKEN" \
-        --user "kutemeikito" \
-        --repo "RastaMod69-Clang" \
+        --user "$GH_USER" \
+        --repo "$GH_REPO" \
         --tag "$tags" \
         --description "$(cat "$HOME_DIR"/install/README.md)"
 
     ./github-release upload \
         --security-token "$GIT_TOKEN" \
-        --user "kutemeikito" \
-        --repo "RastaMod69-Clang" \
+        --user "$GH_USER" \
+        --repo "$GH_REPO" \
         --tag "$tags" \
         --name "$file" \
         --file "$HOME_DIR/$file" \
@@ -134,15 +137,15 @@ if [ "$overwrite" == "y" ]; then
 else
     ./github-release release \
         --security-token "$GIT_TOKEN" \
-        --user "kutemeikito" \
-        --repo "RastaMod69-Clang" \
+        --user "$GH_USER" \
+        --repo "$GH_REPO" \
         --tag "$tags" \
         --description "$(cat "$HOME_DIR"/install/README.md)"
 
     ./github-release upload \
         --security-token "$GIT_TOKEN" \
-        --user "kutemeikito" \
-        --repo "RastaMod69-Clang" \
+        --user "$GH_USER" \
+        --repo "$GH_REPO" \
         --tag "$tags" \
         --name "$file" \
         --file "$HOME_DIR/$file" || failed=y
@@ -154,8 +157,8 @@ while [ "$failed" == "y" ]; do
     msg "Upload again"
     ./github-release upload \
         --security-token "$GIT_TOKEN" \
-        --user "kutemeikito" \
-        --repo "RastaMod69-Clang" \
+        --user "$GH_USER" \
+        --repo "$GH_REPO" \
         --tag "$tags" \
         --name "$file" \
         --file "$HOME_DIR/$file" \
