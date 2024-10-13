@@ -8,7 +8,7 @@ err() {
 
 # Environment checker
 echo "Checking environment ..."
-for environment in TELEGRAM_TOKEN TELEGRAM_CHAT GIT_TOKEN BRANCH; do
+for environment in TELEGRAM_TOKEN TELEGRAM_CHAT GH_TOKEN BRANCH; do
     [ -z "${!environment}" ] && {
         err "- $environment not set!"
         exit 1
@@ -120,14 +120,14 @@ popd || exit
 failed=n
 if [ "$overwrite" == "y" ]; then
     ./github-release edit \
-        --security-token "$GIT_TOKEN" \
+        --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
         --repo "$GH_REPO" \
         --tag "$tags" \
         --description "$(cat "$HOME_DIR"/install/README.md)"
 
     ./github-release upload \
-        --security-token "$GIT_TOKEN" \
+        --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
         --repo "$GH_REPO" \
         --tag "$tags" \
@@ -136,14 +136,14 @@ if [ "$overwrite" == "y" ]; then
         --replace || failed=y
 else
     ./github-release release \
-        --security-token "$GIT_TOKEN" \
+        --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
         --repo "$GH_REPO" \
         --tag "$tags" \
         --description "$(cat "$HOME_DIR"/install/README.md)"
 
     ./github-release upload \
-        --security-token "$GIT_TOKEN" \
+        --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
         --repo "$GH_REPO" \
         --tag "$tags" \
@@ -156,7 +156,7 @@ while [ "$failed" == "y" ]; do
     failed=n
     msg "Upload again"
     ./github-release upload \
-        --security-token "$GIT_TOKEN" \
+        --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
         --repo "$GH_REPO" \
         --tag "$tags" \
