@@ -28,12 +28,7 @@ send_file() {
 
 # Build LLVM
 echo "building LLVM..."
-send_msg "
-╔ ⚒ =============<b>RastaMod69</b>============= ⚒ 
-╠ <b>Start build RastaMod69 Clang</b> 
-╠ LLVM Branch   : <code>[ $BRANCH ]</code> 
-╠ Compiler      : <b>Github Actions</b>
-╚ ⚒ ===================================== ⚒ "
+send_msg "gh $RUN_NUM: building LLVM"
 
 ./build-llvm.py \
     --defines LLVM_PARALLEL_COMPILE_JOBS="$(nproc)" LLVM_PARALLEL_LINK_JOBS="$(nproc)" CMAKE_C_FLAGS=-O3 CMAKE_CXX_FLAGS=-O3 \
@@ -51,14 +46,15 @@ for file in install/bin/clang-[1-9]*; do
     if [ -e "$file" ]; then
         msg "LLVM build successful"
     else
-        err "LLVM build failed!"
-        send_msg "LLVM build failed!"
-        exit
+        err "LLVM build failed"
+        send_msg "gh $RUN_NUM: LLVM build failed"
+        exit 1
     fi
 done
 
 # Build binutils
-echo "building binutils ..."
+echo "building binutils..."
+send_msg "gh $RUN_NUM: building binutils"
 ./build-binutils.py \
     --install-folder "$HOME_DIR/install" \
     --targets arm aarch64 x86_64
@@ -184,14 +180,4 @@ while [ "$failed" == "y" ]; do
 done
 
 # Send message to telegram
-send_msg "
-╔ ⛩ <b>=================Build Done!=================</b> ⛩
-║
-╠ 🗓 <b>Build Date : <code>$build_date</code></b> 
-╠ ⚙️ <b>Clang Version : <code>$clang_version</code></b>
-╠ 🖥 <b>Binutils Version : <code>$binutils_version</code></b>
-╠ 🔗 <b>Compile Based : <a href='$llvm_commit_url'>Fork LLVM-Project</a></b> 
-╠ 📍 <b>Push Repository : <a href='https://github.com/kutemeikito/RastaMod69-Clang.git'>RastaMod69-Clang</a></b>
-╠ ⌚️ <b>Completed in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !</b>
-║
-╚ ⛩ <b>============================================</b> ⛩"
+send_msg "gh $RUN_NUM: done in $((SECONDS / 60))m and $((SECONDS % 60))s%nlgh $RUN_NUM: clang version: $clang_version%nlgh $RUN_NUM: binutils version: $binutils_version%nlgh $RUN_NUM: llvm commit: $llvm_commit_url"
