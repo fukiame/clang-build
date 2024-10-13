@@ -9,8 +9,8 @@ on:
         default: 'main'
 
 env:
-  TELEGRAM_TOKEN: ${{ secrets.BOT_TOKEN }}
-  TELEGRAM_CHAT: ${{ secrets.CHAT_ID }}
+  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+  CHAT_ID: ${{ secrets.CHAT_ID }}
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
