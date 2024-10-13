@@ -7,22 +7,15 @@ on:
         description: 'LLVM Branch'
         required: true
         default: 'main'
-      TELEGRAM_TOKEN:
-        description: 'Telegram token' 
-        required: true
-        default: ''
-      TELEGRAM_CHAT:
-        description: 'Telegram Chat Id' 
-        required: true
-        default: ''
-      GIT_TOKEN:
-        description: 'Github Token' 
-        required: true
-        default: ''
+
+env:
+  TELEGRAM_TOKEN: ${{ secrets.BOT_TOKEN }}
+  TELEGRAM_CHAT: ${{ secrets.CHAT_ID }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
-    name: RastaMod69-Clang by ${{ github.actor }}
+    name: Marija clang
     runs-on: ubuntu-22.04
     if: github.event.repository.owner.id == github.event.sender.id
     env:
@@ -50,14 +43,11 @@ jobs:
 
     - name: Clone Repo
       run: |
-        git clone -b git-actions https://github.com/kutemeikito/clang-build.git
+        git clone -b Marija https://github.com/fukiame/clang-build.git
 
     - name: Run Build.sh
       run: |
         cd clang-build
-        export TELEGRAM_TOKEN="${{ github.event.inputs.TELEGRAM_TOKEN }}"
-        export TELEGRAM_CHAT="${{ github.event.inputs.TELEGRAM_CHAT }}"
-        export GIT_TOKEN="${{ github.event.inputs.GIT_TOKEN }}"
         export BRANCH="${{ github.event.inputs.BRANCH }}"
         bash build.sh
       continue-on-error: true
