@@ -17,7 +17,6 @@ for environment in TELEGRAM_TOKEN TELEGRAM_CHAT GIT_TOKEN BRANCH; do
         exit 1
     }
 done
-msg "- All environment variables are set."
 
 # Get home directory
 HOME_DIR="$(pwd)"
@@ -64,10 +63,10 @@ send_msg "
 # Check if the final clang binary exists or not
 for file in install/bin/clang-[1-9]*; do
     if [ -e "$file" ]; then
-        msg "LLVM's build successful"
+        msg "LLVM build successful"
     else
-        err "LLVM's build failed!"
-        send_msg "LLVM's build failed!"
+        err "LLVM build failed!"
+        send_msg "LLVM build failed!"
         exit
     fi
 done
