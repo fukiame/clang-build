@@ -20,7 +20,7 @@ HOME_DIR="$(pwd)"
 
 # Telegram setup
 send_msg() {
-    bash "$HOME_DIR/tg_utils.sh" msg ${@}
+    bash "$HOME_DIR/tg_utils.sh" msg "$1"
 }
 send_file() {
     bash "$HOME_DIR/tg_utils.sh" up "$1" "$2"
