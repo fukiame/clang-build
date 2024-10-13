@@ -8,7 +8,7 @@ err() {
 
 # Environment checker
 echo "Checking environment ..."
-for environment in TELEGRAM_TOKEN TELEGRAM_CHAT GH_TOKEN BRANCH; do
+for environment in BOT_TOKEN CHAT_ID GH_TOKEN BRANCH; do
     [ -z "${!environment}" ] && {
         err "- $environment not set!"
         exit 1
