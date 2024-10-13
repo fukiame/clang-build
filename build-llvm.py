@@ -396,14 +396,21 @@ clone_options.add_argument('--use-good-revision',
                            action='store_const',
                            const=GOOD_REVISION,
                            dest='ref')
-parser.add_argument('--vendor-string',
+parser.add_argument('--clang-vendor-string',
                     help=textwrap.dedent('''\
-                    Add this value to the clang and ld.lld version string (like "Apple clang version..."
+                    Add this value to the clang version string (like "Apple clang version..."
                     or "Android clang version..."). Useful when reverting or applying patches on top
                     of upstream clang to differentiate a toolchain built with this script from
                     upstream clang or to distinguish a toolchain built with this script from the
                     system's clang. Defaults to ClangBuiltLinux, can be set to an empty string to
                     override this and have no vendor in the version string.
+
+                    '''),
+                    type=str,
+                    default='ClangBuiltLinux')
+parser.add_argument('--lld-vendor-string',
+                    help=textwrap.dedent('''\
+                    same as --clang-vendor-string but this go to lld instead :eh:
 
                     '''),
                     type=str,
@@ -525,9 +532,10 @@ if args.bolt and not final.can_use_perf():
 common_cmake_defines = {}
 if args.assertions:
     common_cmake_defines['LLVM_ENABLE_ASSERTIONS'] = 'ON'
-if args.vendor_string:
-    common_cmake_defines['CLANG_VENDOR'] = args.vendor_string
-    common_cmake_defines['LLD_VENDOR'] = args.vendor_string
+if args.clang_vendor_string:
+    common_cmake_defines['CLANG_VENDOR'] = args.clang_vendor_string
+if args.lld_vendor_string:
+    common_cmake_defines['LLD_VENDOR'] = args.lld_vendor_string
 if args.defines:
     defines = dict(define.split('=', 1) for define in args.defines)
     common_cmake_defines.update(defines)
