@@ -46,7 +46,8 @@ send_msg "gh $RUN_NUM: building LLVM"
     --ref "$BRANCH" \
     --shallow-clone \
     --targets AArch64 ARM X86 \
-    --vendor-string "Marija"
+    --clang-vendor-string "Marija" \
+    --lld-vendor-string "Lilith"
 
 # Check if the final clang binary exists or not
 for file in install/bin/clang-[1-9]*; do
