@@ -26,7 +26,7 @@ git config --global user.name "fukiame"
 git config --global user.email "fukiame@proton.me"
 
 GH_USER=fukiame
-GH_REPO=clang-build
+GH_REPO=Marija-Clang
 
 # Build LLVM
 echo "building LLVM..."
