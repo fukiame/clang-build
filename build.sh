@@ -92,7 +92,7 @@ short_llvm_commit="$(cut -c-8 <<<"$llvm_commit")"
 popd || exit
 llvm_commit_url="https://github.com/llvm/llvm-project/commit/$short_llvm_commit"
 clang_version="$("$HOME_DIR"/install/bin/clang --version | head -n1 | cut -d' ' -f4)"
-build_date="$(TZ=Asia/Jakarta date +"%Y-%m-%d")"
+build_date="$(TZ=Asia/Ho_Chi_Minh date +"%Y-%m-%d")"
 tags="Marija-Clang-$clang_version"
 file="Marija-Clang-$clang_version.tar.gz"
 
