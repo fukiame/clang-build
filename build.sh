@@ -154,7 +154,7 @@ fi
 # Handle uploader if upload failed
 while [ "$failed" == "y" ]; do
     failed=n
-    msg "Upload again"
+    echo "upload failed, trying again..."
     ./github-release upload \
         --security-token "$GH_TOKEN" \
         --user "$GH_USER" \
