@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 # Copyright ©2022-2024 XSans0
 
-# Function to show an informational message
-err() {
-    echo -e "\e[1;41$*\e[0m"
-}
-
 # Environment checker
 echo "Checking environment ..."
 for environment in BOT_TOKEN CHAT_ID GH_TOKEN BRANCH; do
     [ -z "${!environment}" ] && {
-        err "- $environment not set!"
+        echo "$environment is not set, bailing out"
         exit 1
     }
 done
@@ -52,9 +47,9 @@ send_msg "gh $RUN_NUM: building LLVM"
 # Check if the final clang binary exists or not
 for file in install/bin/clang-[1-9]*; do
     if [ -e "$file" ]; then
-        msg "LLVM build successful"
+        echo "LLVM build successful"
     else
-        err "LLVM build failed"
+        echo "LLVM build failed"
         send_msg "gh $RUN_NUM: LLVM build failed"
         exit 1
     fi
