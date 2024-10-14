@@ -115,7 +115,6 @@ popd || exit
 # Check tags already exists or not
 overwrite=y
 git tag -l | grep "$tags" || overwrite=n
-popd || exit
 
 # Upload to github release
 failed=n
