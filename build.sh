@@ -93,8 +93,8 @@ popd || exit
 llvm_commit_url="https://github.com/llvm/llvm-project/commit/$short_llvm_commit"
 clang_version="$("$HOME_DIR"/install/bin/clang --version | head -n1 | cut -d' ' -f4)"
 build_date="$(TZ=Asia/Jakarta date +"%Y-%m-%d")"
-tags="$GH_REPO_version-release"
-file="$GH_REPO_version.tar.gz"
+tags="Marija-Clang-$clang_version-release"
+file="Marija-Clang-$clang_version.tar.gz"
 
 # Get binutils version
 binutils_version=$(grep "LATEST_BINUTILS_RELEASE" build-binutils.py)
